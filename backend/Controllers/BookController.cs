@@ -1,5 +1,6 @@
 using Bookish.Models.API;
 using Bookish.Models.Database;
+using Bookish.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bookish.Controllers
@@ -9,42 +10,24 @@ namespace Bookish.Controllers
 
     public class BookController : ControllerBase
     {
-        private readonly ILogger<BookController> _logger;
+        private readonly IBookService bookService;
 
         public BookController(ILogger<BookController> logger)
         {
-            _logger = logger;
+            bookService = new BookService();
         }
 
         [HttpGet]
-        public IEnumerable<BookResponse> GetAllBooks()
+        public IEnumerable<Book> GetAllBooks()
         {
-            var context = new BookishContext();
+            return bookService.GetAllBooks();
+        }
 
-            Book BookToAdd = new Book();
-
-            BookToAdd.Title = "The Bible";
-
-            context.Books.Add(BookToAdd);
-            context.SaveChanges();
-
-            List<BookResponse> books = new List<BookResponse>
-            {
-                new BookResponse
-                {
-                    BookID = 1,
-                    Title = "For Whom the Bell Tolls"
-                },
-                new BookResponse
-                {
-                    BookID = 2,
-                    Title = "The Count of Monte Cristo"
-                },
-            };
-
-
-
-            return books;
+        [HttpPost]
+        [Route("add")]
+        public Book AddBook(AddBookRequest request)
+        {
+            return bookService.AddBook(request);
         }
     }
 }
