@@ -13,9 +13,12 @@ namespace Bookish.Repositories
     {
         private readonly BookishContext context;
 
-        public BookRepo()
+        public BookRepo
+        (
+            BookishContext bookishContext
+        )
         {
-            context = new BookishContext();
+            context = bookishContext;
         }
 
         public Book AddBook(AddBookRequest request)

@@ -13,10 +13,5 @@ namespace Bookish
         {
             optionsBuilder.UseNpgsql("Host=localhost:5432;Database=bookish;Username=bookish;Password=bookish");
         }
-
-        // protected override void OnModelCreating(ModelBuilder modelBuilder)
-        // {
-        //     base.OnModelCreating(modelBuilder);
-        // }
     }
 }

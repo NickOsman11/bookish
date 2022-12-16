@@ -13,9 +13,12 @@ namespace Bookish.Repositories
     {
         private readonly BookishContext context;
 
-        public AuthorRepo()
+        public AuthorRepo
+        (
+            BookishContext bookishContext
+        )
         {
-            context = new BookishContext();
+            context = bookishContext;
         }
 
         public Author GetAuthorByID(int ID)

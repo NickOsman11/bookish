@@ -11,26 +11,30 @@ namespace Bookish.Services
     }
     public class BookService : IBookService
     {
-        private readonly IBookRepo bookRepo;
-        private readonly IAuthorRepo authorRepo;
+        private readonly IBookRepo books;
+        private readonly IAuthorRepo authors;
 
-        public BookService()
+        public BookService
+        (
+            IAuthorRepo authorRepo,
+            IBookRepo bookRepo
+        )
         {
-            bookRepo = new BookRepo();
-            authorRepo = new AuthorRepo();
+            authors = authorRepo;
+            books = bookRepo;
         }
 
         public Book AddBook(AddBookRequest request)
         {
 
-            authorRepo.GetAuthorsByID(request.AuthorIDs);
+            authors.GetAuthorsByID(request.AuthorIDs);
 
-            return bookRepo.AddBook(request);
+            return books.AddBook(request);
         }
 
         public IEnumerable<Book> GetAllBooks()
         {
-            return bookRepo.GetAllBooks();
+            return books.GetAllBooks();
         }
         
     }

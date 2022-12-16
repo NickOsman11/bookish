@@ -10,24 +10,24 @@ namespace Bookish.Controllers
 
     public class BookController : ControllerBase
     {
-        private readonly IBookService bookService;
+        private readonly IBookService books;
 
-        public BookController(ILogger<BookController> logger)
+        public BookController(IBookService bookService)
         {
-            bookService = new BookService();
+            books = bookService;
         }
 
         [HttpGet]
         public IEnumerable<Book> GetAllBooks()
         {
-            return bookService.GetAllBooks();
+            return books.GetAllBooks();
         }
 
         [HttpPost]
         [Route("add")]
         public Book AddBook(AddBookRequest request)
         {
-            return bookService.AddBook(request);
+            return books.AddBook(request);
         }
     }
 }
