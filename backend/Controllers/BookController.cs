@@ -20,7 +20,7 @@ namespace Bookish.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Book> GetAllBooks()
+        public IEnumerable<BookResponse> GetAllBooks()
         {
             return books.GetAllBooks();
         }

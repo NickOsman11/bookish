@@ -7,7 +7,7 @@ namespace Bookish.Services
 {
     public interface IBookService
     {
-        IEnumerable<Book> GetAllBooks();
+        IEnumerable<BookResponse> GetAllBooks();
         Book AddBook(AddBookRequest request);
     }
     public class BookService : IBookService
@@ -39,9 +39,29 @@ namespace Bookish.Services
             return books.AddBook(bookToAdd);
         }
 
-        public IEnumerable<Book> GetAllBooks()
+        public IEnumerable<BookResponse> GetAllBooks()
         {
-            return books.GetAllBooks();
+            List<Book> retrivedBooks = books.GetAllBooks().ToList();
+            List<BookResponse> bookResponses = new List<BookResponse>();
+
+           foreach (Book book in retrivedBooks)
+            {
+                BookResponse bookResponse = new BookResponse
+                {
+                    BookID = book.BookID,
+                    Title = book.Title,
+                    Authors = new List<BarebonesAuthor>()
+                };
+
+                foreach (Author author in book.Authors)
+                {
+                    bookResponse.Authors.Add(new BarebonesAuthor(author));
+                }
+
+                bookResponses.Add(bookResponse);
+            };
+            
+            return bookResponses;
         }
         
     }

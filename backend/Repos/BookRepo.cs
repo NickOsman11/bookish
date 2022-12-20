@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bookish.Models.API;
 using Bookish.Models.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bookish.Repositories
 {
@@ -34,7 +35,9 @@ namespace Bookish.Repositories
         public IEnumerable<Book> GetAllBooks()
         {
 
-            List<Book> books = context.Books.ToList();
+            List<Book> books = context.Books
+                .Include(book => book.Authors)
+                .ToList();
 
             return books;
         }
