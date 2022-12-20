@@ -1,10 +1,11 @@
 import { ReactElement, useEffect, useState } from "react";
-import { getAllBooks } from "../../../Clients/ApiClient"
+import { BarebonesAuthor, getAllBooks } from "../../../Clients/ApiClient"
+import { BookCard } from "./BookCard";
 
 interface BookResponse {
     bookID: number;
     title: string;
-    authors?: any[];
+    authors: BarebonesAuthor[];
 }
 
 export const BooksPage: React.FC  = () => {
@@ -24,7 +25,15 @@ export const BooksPage: React.FC  = () => {
             <>
                 <ol>
                     {books.map(book => {
-                        return <li> {book.title} </li>}
+                        return (
+                        <li>
+                            <BookCard 
+                                bookID={book.bookID}
+                                title={book.title}
+                                authors={book.authors}
+                            /> 
+                        </li>
+                        )}
                     )}
                 </ol>
             </>
