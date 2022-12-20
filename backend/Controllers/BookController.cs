@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Bookish.Exceptions;
 using Bookish.Models.API;
 using Bookish.Models.Database;
 using Bookish.Services;
@@ -25,9 +27,16 @@ namespace Bookish.Controllers
 
         [HttpPost]
         [Route("add")]
-        public Book AddBook(AddBookRequest request)
+        public ActionResult<Book> AddBook(AddBookRequest request)
         {
-            return books.AddBook(request);
+            try
+            {
+                return books.AddBook(request);  
+            }
+            catch (EntityNotInDbException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

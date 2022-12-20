@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Bookish.Models.API;
 using Bookish.Models.Database;
 
@@ -6,7 +8,7 @@ namespace Bookish.Repositories
     public interface IBookRepo
     {
         IEnumerable<Book> GetAllBooks();
-        Book AddBook(AddBookRequest request);
+        Book AddBook(Book bookToAdd);
     }
 
     public class BookRepo : IBookRepo
@@ -21,21 +23,8 @@ namespace Bookish.Repositories
             context = bookishContext;
         }
 
-        public Book AddBook(AddBookRequest request)
+        public Book AddBook(Book bookToAdd)
         {
-            List<Author> authors = new List<Author>();
-
-            foreach (int ID in request.AuthorIDs)
-            {
-                authors.Add(context.Authors.Single(a => a.AuthorID == ID));
-            }
-            
-            Book bookToAdd = new Book
-            {
-                Title = request.Title,
-                Authors = authors
-            };
-
             var addedBook = context.Books.Add(bookToAdd);
             context.SaveChanges();
 

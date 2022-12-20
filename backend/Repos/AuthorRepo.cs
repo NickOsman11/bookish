@@ -1,12 +1,16 @@
+using Bookish.Exceptions;
 using Bookish.Models.API;
 using Bookish.Models.Database;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace Bookish.Repositories
 {
     public interface IAuthorRepo
     {
         Author GetAuthorByID(int ID);
-        List<Author> GetAuthorsByID(List<int> IDs);
+        IEnumerable<Author> GetAuthorsByID(List<int> IDs);
     }
 
     public class AuthorRepo : IAuthorRepo
@@ -23,10 +27,18 @@ namespace Bookish.Repositories
 
         public Author GetAuthorByID(int ID)
         {
-            return context.Authors.Single(a => a.AuthorID == ID);
+            try
+            {
+                Author author = context.Authors.Single(a => a.AuthorID == ID);
+                return author;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new EntityNotInDbException($"The database does not contain an author with ID {ID}");
+            }
         }
 
-        public List<Author> GetAuthorsByID(List<int> IDs)
+        public IEnumerable<Author> GetAuthorsByID(List<int> IDs)
         {
             List<Author> authors = new List<Author>();
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Bookish.Models.API;
 using Bookish.Models.Database;
 using Bookish.Repositories;
@@ -27,9 +28,15 @@ namespace Bookish.Services
         public Book AddBook(AddBookRequest request)
         {
 
-            authors.GetAuthorsByID(request.AuthorIDs);
+            List<Author> bookAuthors = (List<Author>)authors.GetAuthorsByID(request.AuthorIDs);
 
-            return books.AddBook(request);
+            Book bookToAdd = new Book
+            {
+                Title = request.Title,
+                Authors = bookAuthors
+            };
+
+            return books.AddBook(bookToAdd);
         }
 
         public IEnumerable<Book> GetAllBooks()

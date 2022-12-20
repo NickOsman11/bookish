@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Bookish.Models.API
 {
     public class AddBookRequest
