@@ -26,6 +26,7 @@ namespace Bookish
             builder.Services.AddTransient<IAuthorRepo, AuthorRepo>();
             builder.Services.AddTransient<IBookRepo, BookRepo>();
 
+            builder.Services.AddTransient<IAuthorService, AuthorService>();
             builder.Services.AddTransient<IBookService, BookService>();
 
             builder.Services.AddControllers().AddJsonOptions(x =>

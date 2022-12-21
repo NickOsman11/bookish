@@ -9,6 +9,7 @@ namespace Bookish.Repositories
 {
     public interface IAuthorRepo
     {
+        IEnumerable<Author> GetAllAuthors();
         Author GetAuthorByID(int ID);
         IEnumerable<Author> GetAuthorsByID(List<int> IDs);
     }
@@ -23,6 +24,12 @@ namespace Bookish.Repositories
         )
         {
             context = bookishContext;
+        }
+
+        public IEnumerable<Author> GetAllAuthors()
+        {
+            List<Author> retrivedAuthors = context.Authors.ToList();
+            return retrivedAuthors;
         }
 
         public Author GetAuthorByID(int ID)
