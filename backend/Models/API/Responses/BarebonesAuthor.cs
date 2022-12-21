@@ -13,6 +13,4 @@ namespace Bookish.Models.API
             Name = author.Name;
         }
     }
-
-
 }

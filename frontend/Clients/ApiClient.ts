@@ -4,7 +4,7 @@ export interface AddBookRequest {
     title: string;
     coverImageURL: string;
     description: string;
-    authorIDs: number[];
+    bookAuthors: BarebonesAuthor[];
 }
 
 interface BookResponse {
@@ -14,8 +14,14 @@ interface BookResponse {
 }
 
 export interface BarebonesAuthor {
-    id: number;
+    authorID: number;
     name: string;
+}
+
+export const getAllBarebonesAuthors = async () : Promise<BarebonesAuthor[]> => {
+
+    const response = await fetch(`${backendUrl}/authors/bb`).then(response => response.json())
+    return response
 }
 
 export const getAllBooks = async () : Promise<BookResponse[]> => {
@@ -27,6 +33,7 @@ export const getAllBooks = async () : Promise<BookResponse[]> => {
 export const addBook = async (request: AddBookRequest) : Promise<Boolean> => {
     
     try {
+        console.log(request)
         const response: Response = await fetch(`${backendUrl}/books/add`, {
             method: 'POST',
             body: JSON.stringify(request),
