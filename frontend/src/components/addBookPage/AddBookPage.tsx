@@ -1,12 +1,5 @@
 import { useState } from "react"
-import { BarebonesAuthor } from "../../../Clients/ApiClient"
-
-interface AddBookRequest {
-    title: string;
-    coverImageURL: string;
-    description: string;
-    authorIDs: number[];
-}
+import { addBook, AddBookRequest, BarebonesAuthor } from "../../../Clients/ApiClient"
 
 export const AddBookPage = () => {
 
@@ -31,8 +24,9 @@ export const AddBookPage = () => {
     };
 
     const handleSubmit = (event: any) => {
+
         event.preventDefault();
-        console.log(bookDetails)
+        addBook(bookDetails).then(response => console.log(response))
     };
 
 
